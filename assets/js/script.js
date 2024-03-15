@@ -10,4 +10,18 @@ $(document).ready(function(){
         // TODO: perform FETCH
 
     });
+    // TODO: Clear the previous searches defaults
+    
+    // TODO: Check for previous searches (localStorage)
+
+    // TODO: If there are results, populate the list
+
+    // TODO: Previous Search button event listener
+    $("button.previousSearchInput").click(function(){
+        // TODO: perform FETCH
+
+    });
+
+    
+
 });
