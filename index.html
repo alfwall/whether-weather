@@ -8,21 +8,42 @@
   <link rel="stylesheet" href="./assets/css/reset.css" />
   <link rel="stylesheet" href="./assets/css/style.css" />
   <title>????????????</title>
+  <link
+    rel="stylesheet"
+    href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+  />
 </head>
 
 <body>
   <header>
-    <h1>hhhhhh horses hhhhh</h1>
+    <h1>Weather Dashboard</h1>
   </header>
   
   <main>
-    <h2>hhHHHHHHHHHHHHHHHH</h2>
+    <!-- SEARCH form, followed by previous search history items -->
+    <div id="searchForACity">
+      <label>Search for a City:</label>
+      <input type="text" id="citySearchInput" value="" autocomplete="off" />
+      <button id="searchButton" >Search</button>
+    </div>
+    <div id="cityCurrentData">
+
+    </div>
+    <div id="currentCity">
+
+    </div>
+    <div id="fiveDayForecast">
+
+    </div>
   </main>
   
   <footer>
-    <h3>bees</h3>
+    <h3>Brought to you by some bees 🐝</h3>
   </footer>
   
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 
