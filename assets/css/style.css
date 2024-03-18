@@ -24,14 +24,17 @@ header h1 {
 section#searchForACity {
     margin: 20px;
 }
+
 section#searchForACity h2 {
     font-size: 48px;
     font-weight: bold;
 }
+
 section#searchForACity ul#previousSearches {
     list-style-type: none;
 }
-section#searchForACity .previousSearchInput{
+
+section#searchForACity .previousSearchInput {
     margin: 10px;
 }
 
@@ -41,6 +44,14 @@ section#searchForACity .previousSearchInput{
 
 section#currentCityData {
     margin: 20px;
+    border-color: gray;
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+}
+
+section#currentCityData label {
+    display: block;
 }
 
 
@@ -49,3 +60,13 @@ section#fiveDayForecast {
     margin: 20px;
 }
 
+section#fiveDayForecast .dayFrom5DayForecast {
+    background-color: gray;
+    color: white;
+    text-align: left;
+    margin: 10px;
+    padding: 20px;
+}
+section#fiveDayForecast .dayFrom5DayForecast label {
+    display: block;
+}
