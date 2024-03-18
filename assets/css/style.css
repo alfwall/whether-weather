@@ -5,7 +5,10 @@
     --bg-alt-gradient-image: linear-gradient(var(--bg-dark-purple-gradient), var(--bg-light-purple-gradient));
 }
 
-* {}
+/* All unordered lists in this page don't use bullets. */
+ul {
+    list-style-type: none;
+}
 
 header {
     background-image: var(--bg-gradient-image);
@@ -30,9 +33,7 @@ section#searchForACity h2 {
     font-weight: bold;
 }
 
-section#searchForACity ul#previousSearches {
-    list-style-type: none;
-}
+
 
 section#searchForACity .previousSearchInput {
     margin: 10px;

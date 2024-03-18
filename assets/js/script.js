@@ -40,12 +40,26 @@ $(document).ready(function () {
     function UpdateCurrentCityWeather(cityData) {
         console.log(cityData)
         currentWeather = cityData["list"][0];
+        currentDate = dayjs(currentWeather["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
         //console.log(currentWeather);
         $("#currentCityName").text(cityData["city"]["name"]);
-        $("#currentCityDate").text("("+ dayjs(currentWeather["dt_txt"].split(" ")[0]).format("M/DD/YYYY") + ")")
+        $("#currentCityDate").text("("+ currentDate + ")")
+        // TODO: REPLACE WEATHER SYMBOL!!
+        // $("#currentCityWeatherIcon").text(???);
         $("#currentTemperatureText").text("Temp: " + currentWeather["main"]["temp"] + " °F");
         $("#currentWindSpeedText").text("Wind: " + currentWeather["wind"]["speed"] + " MPH");
         $("#currentHumidityText").text("Humidity: " + currentWeather["main"]["humidity"] + " %");
+
+        var mostRecentDate = currentDate;
+        for (var i=0; i<cityData["list"].length; i++) {
+            var cityWeatherEntry = cityData["list"][i];
+            var cityWeatherEntryDate = dayjs(cityWeatherEntry["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
+            // If the entry is a new day, update most recent date, create a forecast object for it!
+            if (!dayjs(mostRecentDate).isSame(cityWeatherEntryDate)) {
+                var new5DayForecastElement = "<label>5-day Forecast:</label>"; 
+                mostRecentDate = cityWeatherEntryDate;
+            }
+        }
     }
 
     // Takes a city name and does 2 fetches: 1 to get the actual city coordinates, 1 to get the weather
