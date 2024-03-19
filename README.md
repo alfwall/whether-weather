@@ -4,9 +4,9 @@
 Uses openweathermap API to get a weather forecast on searched city names.
 
 ## The Result
-[Click here!](DEPLOYED_URL_HERE)
+[Click here!](https://alfwall.github.io/whether-weather/)
 
-![Screenshot of the deployed project.](SCREENSHOT_OF_PROJECT_IN_ASSETS)
+![Screenshot of the deployed project.](./assets/images/screenshot.png)
 
 ## Credits
 - [Josh Comeau's CSS reset](https://www.joshwcomeau.com/css/custom-css-reset/)
