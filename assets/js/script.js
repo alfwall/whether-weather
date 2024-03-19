@@ -32,14 +32,12 @@ $(document).ready(function () {
         }
 
         $("button.previousSearchInput").click(function () {
-            console.log("city to search: " + $(this).text());
+            //console.log("city to search: " + $(this).text());
             FetchWithLatAndLon($(this).data("lat"), $(this).data("lon"));
         });
     }
     // Immediately call it to populate past searches!
     UpdateSearchHistoryButtons();
-    // And then default to the first button click
-    //$("#previousSearches:first-child").click();
 
     /*                 */
     /* SEARCH REQUESTS */
@@ -48,7 +46,7 @@ $(document).ready(function () {
     function UpdateCurrentCityWeather(cityData) {
         //console.log(cityData);
         var currentWeather = cityData["list"][0];
-        console.log(cityData)
+        //console.log(cityData)
         var cityName = cityData["city"]["name"];
         currentDate = dayjs(currentWeather["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
         $("#currentCityName").text(cityData["city"]["name"]);
