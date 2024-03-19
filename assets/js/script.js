@@ -12,21 +12,21 @@ $(document).ready(function () {
         return JSON.parse(localStorage.getItem(key) || "[]");
     }
 
-    
+
 
     /*                   */
     /* PREVIOUS SEARCHES */
     /*                   */
     // UPDATE RECENT SEARCHES
-    function UpdateSearchHistoryButtons(){
+    function UpdateSearchHistoryButtons() {
         var searches = GetItemInLocalStorage("savedSearches");
         $("#previousSearches").html("");
-        for (var i=0; i<searches.length; i++) {
+        for (var i = 0; i < searches.length; i++) {
             var search = JSON.parse(searches[i]);
             cityName = search["cityName"];
             cityLat = search["coords"]["lat"];
             cityLon = search["coords"]["lon"];
-            var newButton = "<li><button class='previousSearchInput' data-lat='" + cityLat + "' data-lon='"+cityLon+"'>" + cityName + "</button></li>"
+            var newButton = "<li><button class='previousSearchInput' data-lat='" + cityLat + "' data-lon='" + cityLon + "'>" + cityName + "</button></li>"
             $("#previousSearches").append(newButton);
         }
     }
@@ -38,28 +38,60 @@ $(document).ready(function () {
     /*                 */
     // Function to update the current city info. Takes weather data.
     function UpdateCurrentCityWeather(cityData) {
-        console.log(cityData)
+        //console.log(cityData);
         currentWeather = cityData["list"][0];
         currentDate = dayjs(currentWeather["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
-        //console.log(currentWeather);
         $("#currentCityName").text(cityData["city"]["name"]);
-        $("#currentCityDate").text("("+ currentDate + ")")
+        $("#currentCityDate").text("(" + currentDate + ")");
         // TODO: REPLACE WEATHER SYMBOL!!
-        // $("#currentCityWeatherIcon").text(???);
+        var icon = "<img src='https://openweathermap.org/img/wn/" + currentWeather["weather"][0]["icon"] + "@2x.png' ><img />";
+        //console.log(icon)
+        $("#currentCityWeatherIcon").html(icon);
+
         $("#currentTemperatureText").text("Temp: " + currentWeather["main"]["temp"] + " °F");
         $("#currentWindSpeedText").text("Wind: " + currentWeather["wind"]["speed"] + " MPH");
         $("#currentHumidityText").text("Humidity: " + currentWeather["main"]["humidity"] + " %");
 
         var mostRecentDate = currentDate;
-        for (var i=0; i<cityData["list"].length; i++) {
+        var fiveDayForecastHTML = "";
+
+        for (var i = 0; i < cityData["list"].length; i++) {
             var cityWeatherEntry = cityData["list"][i];
             var cityWeatherEntryDate = dayjs(cityWeatherEntry["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
             // If the entry is a new day, update most recent date, create a forecast object for it!
             if (!dayjs(mostRecentDate).isSame(cityWeatherEntryDate)) {
-                var new5DayForecastElement = "<label>5-day Forecast:</label>"; 
                 mostRecentDate = cityWeatherEntryDate;
+                // cityWeatherEntry
+                console.log(cityWeatherEntry)
+                var forecastElement = "<li class='dayFrom5DayForecast'>";
+                forecastElement += "<h2>" + cityWeatherEntryDate + "<span><img src='https://openweathermap.org/img/wn/" + cityWeatherEntry["weather"][0]["icon"] + "@2x.png' /></span></h2>";
+                forecastElement += "<label>Temp: " + cityWeatherEntry["main"]["temp"] + " °F</label>";
+                forecastElement += "<label>Wind: " + cityWeatherEntry["wind"]["speed"] + " MPH</label>";
+                forecastElement += "<label>Humidity " + cityWeatherEntry["main"]["humidity"] + " %";
+                forecastElement += "</li>"
+                fiveDayForecastHTML += forecastElement;
+                
+                currentDate = dayjs(cityWeatherEntry["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
+                console.log(cityWeatherEntry["weather"][0]["icon"]);
+
+
+
+                $("#currentCityName").text(cityData["city"]["name"]);
+                $("#currentCityDate").text("(" + currentDate + ")");
+                // TODO: REPLACE WEATHER SYMBOL!!
+                var icon = "<img src='https://openweathermap.org/img/wn/" + cityWeatherEntry["weather"][0]["icon"] + "@2x.png' ><img />";
+                //console.log(icon)
+                $("#currentCityWeatherIcon").html(icon);
+
+                $("#currentTemperatureText").text("Temp: " + cityWeatherEntry["main"]["temp"] + " °F");
+                $("#currentWindSpeedText").text("Wind: " + cityWeatherEntry["wind"]["speed"] + " MPH");
+                $("#currentHumidityText").text("Humidity: " + cityWeatherEntry["main"]["humidity"] + " %");
+
+
             }
         }
+        // Once looped through sufficiently, html it
+        $("#all5Forecasts").html(fiveDayForecastHTML);
     }
 
     // Takes a city name and does 2 fetches: 1 to get the actual city coordinates, 1 to get the weather
@@ -158,7 +190,7 @@ $(document).ready(function () {
         // Perform FETCH
         FetchWithCityName(searchInput);
     });
-    
+
     // Previous search buttons have latitude and longitude hidden within, saving us a fetch!
     $("button.previousSearchInput").click(function () {
         //console.log("city to search: " + $(this).text());
@@ -173,7 +205,7 @@ $(document).ready(function () {
 
 
 
-    
+
 
 
 

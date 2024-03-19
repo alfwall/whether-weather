@@ -44,6 +44,7 @@ section#searchForACity .previousSearchInput {
 
 
 section#currentCityData {
+    background-color: rgb(211, 211, 211);
     margin: 20px;
     border-color: gray;
     border-width: 2px;

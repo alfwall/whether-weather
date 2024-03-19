@@ -21,11 +21,11 @@
   </header>
 
   <main class="container-fluid text-center">
+
     <!-- SEARCH form, followed by previous search history items -->
     <section id="searchForACity">
       <h2>Search for a City:</h2>
       <form onsubmit="event.preventDefault();">
-
         <input type="text" id="citySearchInput" value="" autocomplete="off" />
         <button id="searchButton">Search</button>
       </form>
@@ -47,7 +47,7 @@
 
     <!-- 5 day forecast -->
     <section id="fiveDayForecast">
-      <label>5-Day Forecast:</label>
+      <h2>5-Day Forecast:</h2>
       <ul id="all5Forecasts">
         <li class="dayFrom5DayForecast">
           <label class="currentPlaceAndTimeAndSymbol">
