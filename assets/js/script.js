@@ -14,6 +14,7 @@ $(document).ready(function () {
 
 
 
+
     /*                   */
     /* PREVIOUS SEARCHES */
     /*                   */
@@ -29,6 +30,11 @@ $(document).ready(function () {
             var newButton = "<li><button class='previousSearchInput' data-lat='" + cityLat + "' data-lon='" + cityLon + "'>" + cityName + "</button></li>"
             $("#previousSearches").append(newButton);
         }
+
+        $("button.previousSearchInput").click(function () {
+            console.log("city to search: " + $(this).text());
+            FetchWithLatAndLon($(this).data("lat"), $(this).data("lon"));
+        });
     }
     // Immediately call it to populate past searches!
     UpdateSearchHistoryButtons();
@@ -41,7 +47,9 @@ $(document).ready(function () {
     // Function to update the current city info. Takes weather data.
     function UpdateCurrentCityWeather(cityData) {
         //console.log(cityData);
-        currentWeather = cityData["list"][0];
+        var currentWeather = cityData["list"][0];
+        console.log(cityData)
+        var cityName = cityData["city"]["name"];
         currentDate = dayjs(currentWeather["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
         $("#currentCityName").text(cityData["city"]["name"]);
         $("#currentCityDate").text("(" + currentDate + ")");
@@ -64,7 +72,7 @@ $(document).ready(function () {
             if (!dayjs(mostRecentDate).isSame(cityWeatherEntryDate)) {
                 mostRecentDate = cityWeatherEntryDate;
                 // cityWeatherEntry
-                console.log(cityWeatherEntry)
+                //console.log(cityWeatherEntry)
                 var forecastElement = "<li class='dayFrom5DayForecast'>";
                 forecastElement += "<h2>" + cityWeatherEntryDate + "<span><img src='https://openweathermap.org/img/wn/" + cityWeatherEntry["weather"][0]["icon"] + "@2x.png' /></span></h2>";
                 forecastElement += "<label>Temp: " + cityWeatherEntry["main"]["temp"] + " °F</label>";
@@ -72,13 +80,13 @@ $(document).ready(function () {
                 forecastElement += "<label>Humidity " + cityWeatherEntry["main"]["humidity"] + " %";
                 forecastElement += "</li>"
                 fiveDayForecastHTML += forecastElement;
-                
+
                 currentDate = dayjs(cityWeatherEntry["dt_txt"].split(" ")[0]).format("M/DD/YYYY");
-                console.log(cityWeatherEntry["weather"][0]["icon"]);
+                //console.log(cityWeatherEntry["weather"][0]["icon"]);
 
 
 
-                $("#currentCityName").text(cityData["city"]["name"]);
+                $("#currentCityName").text(cityName);
                 $("#currentCityDate").text("(" + currentDate + ")");
                 // TODO: REPLACE WEATHER SYMBOL!!
                 var icon = "<img src='https://openweathermap.org/img/wn/" + cityWeatherEntry["weather"][0]["icon"] + "@2x.png' ><img />";
@@ -114,15 +122,13 @@ $(document).ready(function () {
         });
         const firstData = await firstResponse.json();
         if (firstData.length == 0) {
-            console.log("No cities found!! Returning.");
+            //console.log("No cities found!! Returning.");
             return;
         }
         //console.log(firstData[0]);
         var cityName = firstData[0]["name"];
-        var cityState = firstData[0]["state"];
         lat = firstData[0]["lat"];
         lon = firstData[0]["lon"];
-        //console.log(cityName + ", " + cityState + ": lat " + lat + ", lon " + lon);
 
         // Second fetch, to acquire the actual data
         var otherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + appID;
@@ -136,7 +142,7 @@ $(document).ready(function () {
         const secondData = await secondResponse.json();
         //console.log(secondData);
         if (secondData["list"].length == 0) {
-            console.log("No weather data predictions?? Weird. Returning.");
+            //console.log("No weather data predictions?? Weird. Returning.");
             return;
         }
 
@@ -150,10 +156,9 @@ $(document).ready(function () {
             SetItemInLocalStorage("savedSearches", []);
         }
 
-        // TODO: IS THE CITY NAME ALREADY IN SAVED SEARCHES? DON'T HAVE DUPLICATES.
 
         searchInfo = JSON.stringify({
-            "cityName": secondData["city"]["name"],
+            "cityName": cityName,
             "coords": secondData["city"]["coord"]
         });
         //console.log("searchInfo: " + searchInfo)
@@ -164,6 +169,7 @@ $(document).ready(function () {
     }
 
     // Takes lat and lon and fetches just once! Used by previous searches buttons.
+    // Distinct from other async fetch method because it doesn't update SavedSearches in localStorage.
     async function FetchWithLatAndLon(lat, lon) {
         var otherURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + appID;
         const secondResponse = await fetch(
@@ -176,7 +182,7 @@ $(document).ready(function () {
         const secondData = await secondResponse.json();
         //console.log(secondData);
         if (secondData["list"].length == 0) {
-            console.log("No weather data predictions?? Weird. Returning.");
+            //console.log("No weather data predictions?? Weird. Returning.");
             return;
         }
 
@@ -196,22 +202,12 @@ $(document).ready(function () {
         FetchWithCityName(searchInput);
     });
 
-    // Previous search buttons have latitude and longitude hidden within, saving us a fetch!
-    $("button.previousSearchInput").click(function () {
-        //console.log("city to search: " + $(this).text());
-        FetchWithLatAndLon($(this).data("lat"), $(this).data("lon"));
-    });
-
     // On reset click, wipe data and remove search history
     $("#RESETBUTTON").on("click", function () {
         SetItemInLocalStorage("savedSearches", []);
         $("#previousSearches").html("");
+        $("#currentCityData").hide();
+        $("#fiveDayForecast").hide();
     });
-
-
-
-
-
-
 
 });
