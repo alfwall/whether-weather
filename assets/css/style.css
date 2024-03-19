@@ -29,7 +29,7 @@ section#searchForACity {
 }
 
 section#searchForACity h2 {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: bold;
 }
 
@@ -38,8 +38,6 @@ section#searchForACity h2 {
 section#searchForACity .previousSearchInput {
     margin: 10px;
 }
-
-
 
 
 
@@ -67,8 +65,12 @@ section#fiveDayForecast .dayFrom5DayForecast {
     color: white;
     text-align: left;
     margin: 10px;
-    padding: 20px;
+    padding: 10px;
+    text-align: center;
 }
 section#fiveDayForecast .dayFrom5DayForecast label {
     display: block;
+}
+.dayFrom5DayForecast img {
+    display: inline-block;
 }

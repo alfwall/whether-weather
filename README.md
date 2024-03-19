@@ -20,15 +20,15 @@ Uses openweathermap API to get a weather forecast on searched city names.
     - [x] Fetch request the weather with lat/lon
     - [x] Add successful search info to localStorage
     - [x] Presents search history as buttons
-- [ ] Create the Current Weather section
+- [x] Create the Current Weather section
     - [x] 4 blocks of string, bordered
-    - [ ] Print the temp, wind speed, and humidity unstyled 
-    - [ ] Print the city name, date, and weather icon
-        - [ ] Wait what's the deal with weather icons??
-- [ ] Create the 5-Day Forecast section
+    - [x] Print the temp, wind speed, and humidity unstyled 
+    - [x] Print the city name, date, and weather icon
+        - [x] Wait what's the deal with weather icons??
+- [x] Create the 5-Day Forecast section
     - [x] Label, ordered list of recent weather boxes
-    - [ ] Get 5 reports from 5 days (first of the day)
-    - [ ] Style it similarly to Current Weather info
+    - [x] Get 5 reports from 5 days (first of the day)
+    - [x] Style it similarly to Current Weather info
 - [ ] Use bootstrap to format it better
     - [ ] Row with 2 columns, right column has 2 sub-rows
 
