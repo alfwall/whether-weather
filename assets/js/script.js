@@ -32,6 +32,8 @@ $(document).ready(function () {
     }
     // Immediately call it to populate past searches!
     UpdateSearchHistoryButtons();
+    // And then default to the first button click
+    //$("#previousSearches:first-child").click();
 
     /*                 */
     /* SEARCH REQUESTS */
@@ -92,6 +94,9 @@ $(document).ready(function () {
         }
         // Once looped through sufficiently, html it
         $("#all5Forecasts").html(fiveDayForecastHTML);
+
+        $("#currentCityData").show();
+        $("#fiveDayForecast").show();
     }
 
     // Takes a city name and does 2 fetches: 1 to get the actual city coordinates, 1 to get the weather
